@@ -1,0 +1,34 @@
+﻿@model NDashboard.Models.DesignModel
+
+@{
+    ViewBag.Title = "View";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/Designer.css" />
+<script type="text/javascript">
+    function reportDesigner_ExitDesigner(s, e) {
+        window.location = '@Url.Action("Index")';
+    }
+
+</script>
+
+@{
+    var viewer = Html.DevExpress().WebDocumentViewer(settings =>
+    {
+        settings.Name = "reportDesigner";
+
+        settings.Height = Unit.Percentage(100);
+        settings.ControlStyle.CssClass = "fullscreen";
+
+        settings.MenuItems.Add(new DevExpress.XtraReports.Web.WebDocumentViewer.WebDocumentViewerMenuItem {
+            Text = "Exist",  
+            JSClickAction = "function() { reportDesigner_ExitDesigner(); }",
+            ImageClassName = "closeAction"
+        });
+
+    });
+
+    viewer.Bind(Model.Url).Render();
+}
+
+
