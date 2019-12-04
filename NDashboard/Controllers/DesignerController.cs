@@ -65,9 +65,9 @@ namespace NDashboard.Controllers
 
         SqlDataSource CreateSqlDataSource()
         {
-            SqlDataSource ds = new SqlDataSource("localhost_EmployeeDB_Connection");
-            ds.Name = "EmployeeDB";
-            ds.Queries.Add(new CustomSqlQuery("CUSTOMER", "SELECT * FROM [CUSTOMER]"));
+            SqlDataSource ds = new SqlDataSource("ConnectionString");
+            ds.Name = "TarasolDB";
+            //ds.Queries.Add(new CustomSqlQuery("CUSTOMER", "SELECT * FROM [CUSTOMER]"));
             ds.RebuildResultSchema();
             return ds;
         }

@@ -21,10 +21,11 @@
 
         if (Model.DataSource != null)
         {
-            settings.DataSources.Add("Categories", Model.DataSource);
+            settings.DataSources.Add("Tarasol", Model.DataSource);
         }
 
         settings.ClientSideEvents.ExitDesigner = "reportDesigner_ExitDesigner";
+
     });
 
     if (Model.Url != null)

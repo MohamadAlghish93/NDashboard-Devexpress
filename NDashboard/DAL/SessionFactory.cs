@@ -17,7 +17,7 @@ namespace NDashboard.DAL
             var dictionary = new ReflectionDictionary();
             dictionary.GetDataStoreSchema(typeof(SessionFactory).Assembly);
 
-            var connectionString = WebConfigurationManager.ConnectionStrings["localhost_EmployeeDB_Connection"].ConnectionString;
+            var connectionString = WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             var dataStore = XpoDefault.GetConnectionProvider(connectionString, DevExpress.Xpo.DB.AutoCreateOption.DatabaseAndSchema);
 
             dataLayer = new ThreadSafeDataLayer(dictionary, dataStore);

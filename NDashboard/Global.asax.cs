@@ -2,7 +2,9 @@ using DevExpress.XtraReports.Security;
 using DevExpress.XtraReports.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -26,6 +28,10 @@ namespace NDashboard {
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
+
+            string culture = "ar";
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
 
             DevExpress.Web.ASPxWebControl.CallbackError += Application_Error;
             DevExpress.Web.Mvc.MVCxWebDocumentViewer.StaticInitialize();
