@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" dir="rtl">
+
+    <div class="col-sm-5" style="margin:0.5em;">
+        <label style="float: right;">السيرفر</label>
+        <input id="serverName" type="text" class="form-control" />
+    </div>
+
+    <div class="col-sm-5" style="margin:0.5em;">
+        <label style="float: right;">اسم الداتا بيز</label>
+        <input id="databaseName" type="text" class="form-control" />
+    </div>
+
+    <div class="col-sm-5" style="margin:0.5em;">
+        <label style="float: right;">المستخدم</label>
+        <input id="userName" type="text" class="form-control" />
+    </div>
+
+    <div class="col-sm-5" style="margin:0.5em;">
+        <label style="float: right;">كلمة السر</label>
+        <input id="password" type="password" class="form-control" />
+    </div>
+
+</div>
+
+<div class="row">
+    <button type="submit" class="btn btn-success" onclick="SaveSetting()">حفظ</button>
+</div>
+
+<script type="text/javascript">
+
+    function SaveSetting() {
+        debugger
+        let serverName = $('#serverName').val();
+        let databaseName = $('#databaseName').val();
+        let userName = $('#userName').val();
+        let password = $('#password').val();
+
+        let obj = {
+            serverName: serverName,
+            databaseName: databaseName,
+            userName: userName,
+            password: password
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Setting/SaveSetting",
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                debugger
+                if (response != null) {
+                    alert("Name : " + response.Name + ", Designation : " + response.Designation + ", Location :" + response.Location);
+                } else {
+                    alert("Something went wrong");
+                }
+            },
+            failure: function (response) {
+                debugger
+                alert(response.responseText);
+            },
+            error: function (response) {
+                debugger
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+</script>
+

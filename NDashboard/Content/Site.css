@@ -34,3 +34,11 @@ h3
 {
     padding: 12px 0; 
 }
+
+.reports {
+    font-size: 1.2em !important;
+}
+
+.btn_designer {
+    margin: 0.5em 1em !important;
+}

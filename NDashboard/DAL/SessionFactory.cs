@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 
+
 namespace NDashboard.DAL
 {
     public static class SessionFactory

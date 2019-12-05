@@ -6,21 +6,24 @@
 
 <link rel="stylesheet" type="text/css" href="~/Content/Index.css" />
 
-<h2>Report Catalog</h2>
 
 @using (Html.BeginForm())
 {
-    @Html.DevExpress().ListBoxFor(x => x.SelectedReportUrl, settings =>
-    {
-        settings.Name = "Url";
 
-        settings.Properties.TextField = "Url";
-        settings.Properties.ValueField = "Url";
-        settings.Properties.ValueType = typeof(string);
+   
 
-        settings.ControlStyle.CssClass = "reports";
-        settings.Width = 600;
-    }).BindList(Model.Reports).GetHtml()
+<div id="content" style="margin-right: auto; margin-left: auto; width: 800px;">
+
+    @Html.DevExpress().Button(settings =>
+   {
+       settings.Name = "NewReportButton";
+       settings.RouteValues = new { Controller = "Designer", Action = "New" };
+       settings.UseSubmitBehavior = true;
+
+       settings.Text = "New";
+       settings.ControlStyle.CssClass = "btn btn-default btn_designer";
+
+   }).GetHtml()
 
     @Html.DevExpress().Button(settings =>
     {
@@ -28,9 +31,9 @@
         settings.RouteValues = new { Controller = "Designer", Action = "Design" };
         settings.UseSubmitBehavior = true;
 
-        settings.Text = "Run Designer";
-        settings.ControlStyle.CssClass = "buttonSeparator";
-        settings.Width = 100;
+        settings.Text = "Edit";
+        settings.ControlStyle.CssClass = "btn btn-default btn_designer";
+
     }).GetHtml()
 
     @Html.DevExpress().Button(settings =>
@@ -39,26 +42,38 @@
         settings.RouteValues = new { Controller = "Designer", Action = "ViewExist" };
         settings.UseSubmitBehavior = true;
 
-        settings.Text = "View Report";
-        settings.ControlStyle.CssClass = "buttonSeparator";
+        settings.Text = "View";
+        settings.ControlStyle.CssClass = "btn btn-default btn_designer";
         settings.Width = 100;
     }).GetHtml()
 
     @Html.DevExpress().Button(settings =>
-    {
-        settings.Name = "DeleteReportButton";
-        settings.RouteValues = new { Controller = "Designer", Action = "Delete" };
-        settings.UseSubmitBehavior = true;
+       {
+           settings.Name = "DeleteReportButton";
+           settings.RouteValues = new { Controller = "Designer", Action = "Delete" };
+           settings.UseSubmitBehavior = true;
 
-        settings.Text = "Delete";
-        settings.Width = 100;
-    }).GetHtml()
+           settings.Text = "Delete";
+           settings.ControlStyle.CssClass = "btn btn-danger btn_designer";
+           settings.Width = 100;
+       }).GetHtml()
+
+    @Html.DevExpress().ListBoxFor(x => x.SelectedReportUrl, settings =>
+    {
+        settings.Name = "Url";
+
+        settings.Properties.TextField = "Url";
+        settings.Properties.ValueField = "Url";
+        settings.Properties.ValueType = typeof(string);
+
+        settings.ControlStyle.CssClass = "reports ";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(70); ;
+
+    }).BindList(Model.Reports).GetHtml()
+
+</div>
+
 }
 
-
-@*@Html.DevExpress().ReportDesigner(settings =>
-{
-    settings.Name = "ReportDesigner";
-}).Bind(new XtraReport1()).GetHtml()*@
 
 

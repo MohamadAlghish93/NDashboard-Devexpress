@@ -1,54 +1,101 @@
-@model NDashboard.Models.IndexModel
+﻿@model NDashboard.Models.IndexModel
 
 @{
     ViewBag.Title = "Home Page";
 }
 
-<link rel="stylesheet" type="text/css" href="~/Content/Index.css" />
+<!DOCTYPE html>
+<html>
 
-<h2>Report Catalog</h2>
-
-@using (Html.BeginForm())
-{
-    <span>Use the form below to manage reports in the catalog.</span>
-    @Html.DevExpress().ListBoxFor(x => x.SelectedReportUrl, settings =>
-    {
-        settings.Name = "Url";
-
-        settings.Properties.TextField = "Url";
-        settings.Properties.ValueField = "Url";
-        settings.Properties.ValueType = typeof(string);
-
-        settings.ControlStyle.CssClass = "reports";
-        settings.Width = 600;
-    }).BindList(Model.Reports).GetHtml()
-
-    @Html.DevExpress().Button(settings =>
-    {
-        settings.Name = "EditReportButton";
-        settings.RouteValues = new { Controller = "Designer", Action = "Design" };
-        settings.UseSubmitBehavior = true;
-
-        settings.Text = "Run Designer";
-        settings.ControlStyle.CssClass = "buttonSeparator";
-        settings.Width = 100;
-    }).GetHtml()
-
-    @Html.DevExpress().Button(settings =>
-    {
-        settings.Name = "DeleteReportButton";
-        settings.RouteValues = new { Controller = "Designer", Action = "Delete" };
-        settings.UseSubmitBehavior = true;
-
-        settings.Text = "Delete";
-        settings.Width = 100;
-    }).GetHtml()
-}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 
-@*@Html.DevExpress().ReportDesigner(settings =>
-{
-    settings.Name = "ReportDesigner";
-}).Bind(new XtraReport1()).GetHtml()*@
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+    <!-- Editable table -->
+    <div class="card">
+        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+            قائمة التقارير
+        </h3>
+        <div class="card-body">
+            <div id="table" class="table-editable">
+                <span class="table-add float-right mb-3 mr-2">
+
+                    <a class="text-success">
+                        @Html.ActionLink("إضافة", "New", "Home", null, new { @class = "btn btn-primary btn-large" })
+
+                    </a>
+                </span>
+                <table class="table table-bordered  table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th class="text-center">اسم التقرير</th>
+                            <th class="text-center"></th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Reports)
+                        {
+                            <tr>
+                                <td class="pt-3-half" contenteditable="true">
+                                    @item.Url
+                                </td>
+
+                                <td class="pt-3-half">
+
+                                    @Html.ActionLink("معاينة", "ViewExist", new { url = item.Url })
+                                    <a>
+                                        <i class="fas fa-eye"></i>
+
+                                    </a>
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink("تعديل", "Design", new { url = item.Url })
+                                    <a>
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    @Html.ActionLink("حذف", "Delete", new { url = item.Url })
+                                    @*<a href="#myModal" class="trigger-btn" data-toggle="modal">
+                                        <i class="fas fa-trash"></i>
+                                    </a>*@
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Editable table -->
+    
+
+    <script type="text/javascript">
+
+        function deleteRow() {
+
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+
 
 

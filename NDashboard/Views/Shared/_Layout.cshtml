@@ -3,44 +3,70 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>DevExpress ASP.NET project</title>
-    
+    <title></title>
+
     @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Report }
     )
-    @Html.DevExpress().GetScripts( 
+    @Html.DevExpress().GetScripts(
         new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
         new Script { ExtensionSuite = ExtensionSuite.Editors },
         new Script { ExtensionSuite = ExtensionSuite.Report }
     )
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/style4.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-    <div class="content-wrapper">
-        @*<div class="header">
-            <h1>DevExpress ASP.NET project</h1>
-            @Html.DevExpress().Menu(settings => {
-                settings.Name = "HeaderMenu";
-                settings.ItemAutoWidth = false;
-                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                settings.Styles.Style.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
-                settings.Styles.Style.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
-                settings.Items.Add("Home");
-                settings.Items.Add("About");
-                settings.Items.Add("Contact");
-            }).GetHtml()
-        </div>*@
 
-        <div class="content">
+    <div class="content-wrapper" dir="rtl">
+
+        <!-- Page Content  -->
+        <div id="content" style="width:100%;">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#"></a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+
+                        </li>
+                        <li class="nav-item">
+
+                        </li>
+                        <li class="nav-item">
+
+                        </li>
+                        <li class="nav-item">
+
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                    </form>
+                </div>
+            </nav>
+
+
             @RenderBody()
+
         </div>
 
-        @*<div class="footer">
-            <p>&copy; @DateTime.Now.Year - DevExpress ASP.NET project copyright</p>
-        </div>*@
     </div>
+
+
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+
+
 </body>
 </html>

@@ -57,6 +57,12 @@ namespace NDashboard.Controllers
         }
 
         [HttpPost]
+        public ActionResult New(string url)
+        {
+            return View("New", new DesignModel { Url = url, DataSource = CreateSqlDataSource() });
+        }
+
+        [HttpPost]
         public ActionResult ViewExist(string url)
         {
 
