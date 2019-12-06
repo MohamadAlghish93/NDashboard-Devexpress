@@ -18,7 +18,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -215,6 +215,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Constant\ApplicationConstant.cs" />
     <Compile Include="Controllers\DesignerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
@@ -236,6 +237,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NVSHelper\NVSHelper.csproj">
+      <Project>{743f932e-71c2-4c88-9208-b2aee4ed4a20}</Project>
+      <Name>NVSHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -261,7 +268,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54803</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54803/</IISUrl>
+          <IISUrl>http://localhost/NDashboard</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -29,9 +29,6 @@ namespace NDashboard {
             
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
 
-            string culture = "ar";
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
 
             DevExpress.Web.ASPxWebControl.CallbackError += Application_Error;
             DevExpress.Web.Mvc.MVCxWebDocumentViewer.StaticInitialize();

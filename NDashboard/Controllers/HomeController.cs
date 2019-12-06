@@ -11,6 +11,10 @@ using DevExpress.XtraReports.Native;
 using DevExpress.XtraReports.UI;
 using DevExpress.DataAccess.Sql;
 using System.Web.Configuration;
+using NVSHelper.Common.FileManagement;
+using System.Web.Hosting;
+using System.IO;
+using NDashboard.Constant;
 
 namespace NDashboard.Controllers
 {
@@ -53,8 +57,15 @@ namespace NDashboard.Controllers
             using (var session = SessionFactory.Create())
             {
                 var report = session.GetObjectByKey<ReportEntity>(url);
+                string currentPath = HostingEnvironment.ApplicationPhysicalPath;
+                string messageError = string.Empty;
+                currentPath = Path.Combine(currentPath, ApplicationConstant.LOCATION_REPORT_SAVE_NAME);
+                url = url + ApplicationConstant.EXETENSTION_REPORT_SAVE_NAME;
+                currentPath = Path.Combine(currentPath, url);
+                FileManagement fileManagement = new FileManagement();
+                fileManagement.DeleteFileByPath(currentPath,ref messageError);
+                
                 session.Delete(report);
-
                 session.CommitChanges();
             }
             return Index();

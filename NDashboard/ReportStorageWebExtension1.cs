@@ -6,6 +6,9 @@ using DevExpress.XtraReports.Web.Extensions;
 using NDashboard.DAL;
 using System.Linq;
 using System.IO;
+using System.Web.Hosting;
+using NDashboard.Constant;
+using NVSHelper.Common.FileManagement;
 
 namespace NDashboard
 {
@@ -32,7 +35,9 @@ namespace NDashboard
             using (var session = SessionFactory.Create())
             {
                 var report = session.GetObjectByKey<ReportEntity>(url);
-                return report.Layout;
+                MemoryStream vs = this.ReadFromFile(url);
+                return vs.ToArray();
+                //return report.Layout;
             }
         }
 
@@ -51,10 +56,12 @@ namespace NDashboard
             using (var session = SessionFactory.Create())
             {
                 var reportEntity = session.GetObjectByKey<ReportEntity>(url);
+               
 
                 MemoryStream ms = new MemoryStream();
                 report.SaveLayout(ms);
-                reportEntity.Layout = ms.ToArray();
+                //reportEntity.Layout = ms.ToArray();
+                this.SaveToFile(reportEntity.Url, ms);
 
                 session.CommitChanges();
             }
@@ -74,13 +81,37 @@ namespace NDashboard
 
                     var reportEntity = new ReportEntity(session)
                     {
-                        Url = defaultUrl,
-                        Layout = ms.ToArray()
+                        Url = defaultUrl
                     };
-
+                    this.SaveToFile(reportEntity.Url, ms);
                     session.CommitChanges();
                 }
             return defaultUrl;
+        }
+
+        public void SaveToFile(string name, MemoryStream ms)
+        {
+            string currentPath = HostingEnvironment.ApplicationPhysicalPath;
+            string messageError = string.Empty;
+            currentPath = Path.Combine(currentPath, ApplicationConstant.LOCATION_REPORT_SAVE_NAME);
+            name = name + ApplicationConstant.EXETENSTION_REPORT_SAVE_NAME;
+            currentPath = Path.Combine(currentPath, name);
+            FileManagement fileManagement = new FileManagement();
+            if (fileManagement.MemoryStreamWrite(currentPath, ms, ref messageError))
+            {
+
+            }
+        }
+
+        public MemoryStream ReadFromFile(string name)
+        {
+            string currentPath = HostingEnvironment.ApplicationPhysicalPath;
+            string messageError = string.Empty;
+            currentPath = Path.Combine(currentPath, ApplicationConstant.LOCATION_REPORT_SAVE_NAME);
+            name = name + ApplicationConstant.EXETENSTION_REPORT_SAVE_NAME;
+            currentPath = Path.Combine(currentPath, name);
+            FileManagement fileManagement = new FileManagement();
+            return (fileManagement.MemoryStreamRead(currentPath, ref messageError));
         }
     }
 }

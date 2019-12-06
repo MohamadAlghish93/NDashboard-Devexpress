@@ -10,7 +10,7 @@
 }
 
 .closeAction {
-    background-image: url(/Content/Close.png);
+    background-image: url(~/Content/Close.png);
     background-repeat: no-repeat;
 }
 
