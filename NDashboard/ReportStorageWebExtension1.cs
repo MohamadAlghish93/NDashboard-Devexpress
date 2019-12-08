@@ -8,7 +8,7 @@ using System.Linq;
 using System.IO;
 using System.Web.Hosting;
 using NDashboard.Constant;
-using NVSHelper.Common.FileManagement;
+using HelperNVS.FileManagement;
 
 namespace NDashboard
 {

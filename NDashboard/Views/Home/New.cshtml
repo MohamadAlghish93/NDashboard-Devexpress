@@ -11,24 +11,25 @@
     }
 </script>
 
+
 @{
-    var designer = Html.DevExpress().ReportDesigner(settings =>
-    {
-        settings.Name = "reportDesigner";
-
-        settings.Height = Unit.Percentage(100);
-        settings.ControlStyle.CssClass = "fullscreen";
-
-        if (Model.DataSource != null)
+        var designer = Html.DevExpress().ReportDesigner(settings =>
         {
-            settings.DataSources.Add("Tarasol", Model.DataSource);
-        }
+            settings.Name = "reportDesigner";
 
-        settings.ClientSideEvents.ExitDesigner = "reportDesigner_ExitDesigner";
+            settings.Height = Unit.Percentage(100);
+            settings.ControlStyle.CssClass = "fullscreen";
 
-    });
+            if (Model.DataSource != null)
+            {
+                settings.DataSources.Add("Tarasol", Model.DataSource);
+            }
 
-    
-    designer.Bind(new XtraReport()).Render();
-}
+            settings.ClientSideEvents.ExitDesigner = "reportDesigner_ExitDesigner";
+
+        });
+
+
+        designer.Bind(new XtraReport()).Render();
+    }
 

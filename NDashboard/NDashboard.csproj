@@ -239,9 +239,9 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NVSHelper\NVSHelper.csproj">
-      <Project>{743f932e-71c2-4c88-9208-b2aee4ed4a20}</Project>
-      <Name>NVSHelper</Name>
+    <ProjectReference Include="..\HelperNVS\HelperNVS.csproj">
+      <Project>{fad2defa-cd86-4980-904e-f85236102d60}</Project>
+      <Name>HelperNVS</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -26,5 +26,10 @@ namespace NDashboard.Models
         /// Gets or sets Password.
         ///</summary>
         public string Password { get; set; }
+
+        ///<summary>
+        /// Gets or sets Password.
+        ///</summary>
+        public string tarasolURL { get; set; }
     }
 }

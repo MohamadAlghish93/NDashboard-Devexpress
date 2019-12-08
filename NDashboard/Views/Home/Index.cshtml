@@ -21,7 +21,8 @@
 <body>
 
     <!-- Editable table -->
-    <div class="card">
+    <div class="card" dir="rtl">
+
         <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
             قائمة التقارير
         </h3>
@@ -29,17 +30,23 @@
             <div id="table" class="table-editable">
                 <span class="table-add float-right mb-3 mr-2">
 
-                    <a class="text-success">
-                        @Html.ActionLink("إضافة", "New", "Home", null, new { @class = "btn btn-primary btn-large" })
+                    @if (Model.EnableEdit)
+                    {
+                        <a class="text-success">
+                            @Html.ActionLink("إضافة", "New", "Home", null, new { @class = "btn btn-primary btn-large" })
+                        </a>
+                    }
 
-                    </a>
                 </span>
                 <table class="table table-bordered  table-striped text-center">
                     <thead>
                         <tr>
                             <th class="text-center">اسم التقرير</th>
                             <th class="text-center"></th>
-                            <th class="text-center"></th>
+                            @if (Model.EnableEdit)
+                            {
+                                <th class="text-center"></th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -59,19 +66,22 @@
 
                                     </a>
                                 </td>
-                                <td>
 
-                                    @Html.ActionLink("تعديل", "Design", new { url = item.Url })
-                                    <a>
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                                @if (Model.EnableEdit)
+                                {
+                                    <td>
+                                        @Html.ActionLink("تعديل", "Design", new { url = item.Url })
+                                        <a>
+                                            <i class="fas fa-edit"></i>
+                                        </a>
 
-                                    @Html.ActionLink("حذف", "Delete", new { url = item.Url })
-                                    <a href="#myModal" class="trigger-btn" data-toggle="modal">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                        @Html.ActionLink("حذف", "Delete", new { url = item.Url })
+                                        <a href="#myModal" class="trigger-btn" data-toggle="modal">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
 
-                                </td>
+                                    </td>
+                                }
                             </tr>
                         }
 
@@ -81,7 +91,6 @@
         </div>
     </div>
     <!-- Editable table -->
-    
 
     <script type="text/javascript">
 

@@ -20,7 +20,7 @@ namespace NDashboard.Controllers
         [HttpPost]
         public JsonResult SaveSetting(SettingModel settingModel)
         {
-
+            // save in XML file
             bool isNew = true;
             string name = "ConnectionString";
             string path = Server.MapPath("~/Web.Config");
@@ -62,6 +62,18 @@ namespace NDashboard.Controllers
                 doc.DocumentElement.SelectNodes("connectionStrings")[0].AppendChild(node);
             }
             doc.Save(path);
+            //
+
+
+            var config = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+            if (config.AppSettings.Settings["TarasolLink"] != null)
+            {
+                config.AppSettings.Settings["TarasolLink"].Value = settingModel.tarasolURL;
+            }
+            else { 
+                config.AppSettings.Settings.Add("TarasolLink", settingModel.tarasolURL); 
+            }
+            config.Save();
 
             return Json(new { success = true });
         }

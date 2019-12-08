@@ -4,33 +4,45 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" dir="rtl">
+<div dir="rtl">
 
-    <div class="col-sm-5" style="margin:0.5em;">
-        <label style="float: right;">السيرفر</label>
-        <input id="serverName" type="text" class="form-control" />
+    <div class="row">
+
+        <div class="col-sm-5" style="margin:0.5em;">
+            <label style="float: right;">السيرفر</label>
+            <input id="serverName" type="text" class="form-control" />
+        </div>
+
+        <div class="col-sm-5" style="margin:0.5em;">
+            <label style="float: right;">اسم الداتا بيز</label>
+            <input id="databaseName" type="text" class="form-control" />
+        </div>
+
+        <div class="col-sm-5" style="margin:0.5em;">
+            <label style="float: right;">المستخدم</label>
+            <input id="userName" type="text" class="form-control" />
+        </div>
+
+        <div class="col-sm-5" style="margin:0.5em;">
+            <label style="float: right;">كلمة السر</label>
+            <input id="password" type="password" class="form-control" />
+        </div>
+
     </div>
 
-    <div class="col-sm-5" style="margin:0.5em;">
-        <label style="float: right;">اسم الداتا بيز</label>
-        <input id="databaseName" type="text" class="form-control" />
+    <div class="row">
+        <div class="col-sm-10" style="margin:0.5em;">
+            <label style="float: right;">رابط تراسل</label>
+            <input id="tarsol_link" type="url" class="form-control" />
+        </div>
     </div>
 
-    <div class="col-sm-5" style="margin:0.5em;">
-        <label style="float: right;">المستخدم</label>
-        <input id="userName" type="text" class="form-control" />
-    </div>
-
-    <div class="col-sm-5" style="margin:0.5em;">
-        <label style="float: right;">كلمة السر</label>
-        <input id="password" type="password" class="form-control" />
+    <div class="row">
+        <button type="submit" class="btn btn-success" onclick="SaveSetting()">حفظ</button>
     </div>
 
 </div>
 
-<div class="row">
-    <button type="submit" class="btn btn-success" onclick="SaveSetting()">حفظ</button>
-</div>
 
 <script type="text/javascript">
 
@@ -40,12 +52,14 @@
         let databaseName = $('#databaseName').val();
         let userName = $('#userName').val();
         let password = $('#password').val();
+        let tarasolURL = $('#password').val();
 
         let obj = {
             serverName: serverName,
             databaseName: databaseName,
             userName: userName,
-            password: password
+            password: password,
+            tarasolURL: tarasolURL
         }
 
         $.ajax({

@@ -11,7 +11,8 @@ using DevExpress.XtraReports.Native;
 using DevExpress.XtraReports.UI;
 using DevExpress.DataAccess.Sql;
 using System.Web.Configuration;
-using NVSHelper.Common.FileManagement;
+using HelperNVS.FileManagement;
+using HelperNVS.DataBaseManagement;
 using System.Web.Hosting;
 using System.IO;
 using NDashboard.Constant;
@@ -44,12 +45,61 @@ namespace NDashboard.Controllers
                 var model = new IndexModel
                 {
                     SelectedReportUrl = firstReport != null ? firstReport.Url : String.Empty,
-                    Reports = reports
+                    Reports = reports,
+                    EnableEdit = true
                 };
 
                 return View("Index", model);
             }
         }
+
+        //[HttpGet]
+        //public ActionResult Index(string positionUID)
+        //{
+        //    var connectionString = WebConfigurationManager.ConnectionStrings["ConnectionString"];
+        //    if (connectionString == null)
+        //    {
+        //        return RedirectToAction("Index", "Setting");
+        //    }
+        //    if (string.IsNullOrWhiteSpace(connectionString.ConnectionString))
+        //    {
+        //        return RedirectToAction("Index", "Setting");
+        //    }
+
+        //    using (var session = SessionFactory.Create())
+        //    {
+        //        var reports = session.Query<ReportEntity>()
+        //            .Select(x => new ReportModel
+        //            {
+        //                Url = x.Url
+        //            })
+        //            .ToArray();
+        //        var firstReport = reports.FirstOrDefault();
+        //        var model = new IndexModel
+        //        {
+        //            SelectedReportUrl = firstReport != null ? firstReport.Url : String.Empty,
+        //            Reports = reports,
+        //            EnableEdit = false
+        //        };
+
+        //        //
+        //        DataBaseManagement dataBase = new DataBaseManagement();
+        //        List<long> AttrList = dataBase.GetUserPositionAttributes(positionUID, connectionString.ConnectionString);
+        //        foreach (var item in AttrList)
+        //        {
+        //            long val = item & ApplicationConstant.ATT_PREMISSION_VAL;
+        //            if (val == ApplicationConstant.ATT_PREMISSION_VAL) 
+        //            {
+        //                model.EnableEdit = true;
+        //                break;
+        //            }
+        //        }
+
+        //        //
+
+        //        return View("Index", model);
+        //    }
+        //}
 
         [HttpGet]
         public ActionResult Delete(string url)

@@ -9,5 +9,6 @@ namespace NDashboard.Models
     {
         public ReportModel[] Reports { get; set; }
         public string SelectedReportUrl { get; set; }
+        public bool EnableEdit { get; set; }
     }
 }
