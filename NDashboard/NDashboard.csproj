@@ -219,7 +219,7 @@
     <Compile Include="Controllers\DesignerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
-    <Compile Include="DAL\ReportEntity.cs" />
+    <Compile Include="DAL\TSOUTERREPORT.cs" />
     <Compile Include="DAL\SessionFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

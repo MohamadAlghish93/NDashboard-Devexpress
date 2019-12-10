@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassesHelper\ClassesHelper.cs" />
     <Compile Include="DataBaseManagement\DataBaseManagement.cs" />
     <Compile Include="FileManagement\FileManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

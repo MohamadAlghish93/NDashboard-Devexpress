@@ -16,12 +16,13 @@ using HelperNVS.DataBaseManagement;
 using System.Web.Hosting;
 using System.IO;
 using NDashboard.Constant;
+using HelperNVS.ClassesHelper;
 
 namespace NDashboard.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index() 
+        public ActionResult Index()
         {
             var connectionString = WebConfigurationManager.ConnectionStrings["ConnectionString"];
             if (connectionString == null)
@@ -35,12 +36,43 @@ namespace NDashboard.Controllers
 
             using (var session = SessionFactory.Create())
             {
-                var reports = session.Query<ReportEntity>()
+                string currentPath = HostingEnvironment.ApplicationPhysicalPath;
+                string messageError = string.Empty;
+                currentPath = Path.Combine(currentPath, ApplicationConstant.LOCATION_REPORT_SAVE_NAME);
+                FileManagement fileManagement = new FileManagement();
+                List<ClassesHelper.FliesName> reportsFile = fileManagement.GetFilesWithoutExtensionFromDirectory(currentPath, ref messageError);
+
+
+                var reports = session.Query<TSOUTERREPORT>()
                     .Select(x => new ReportModel
                     {
                         Url = x.Url
                     })
                     .ToArray();
+                if (reportsFile.Count != reports.Count())
+                {
+
+                    foreach (var item in reports)
+                    {
+                        DeletReport(item.Url);
+                    }
+
+                    foreach (var elem in reportsFile)
+                    {
+                        var reportEntity = new TSOUTERREPORT(session)
+                        {
+                            Url = elem.Url
+                        };
+                        session.CommitChanges();
+                    }
+                    reports = session.Query<TSOUTERREPORT>()
+                    .Select(x => new ReportModel
+                    {
+                        Url = x.Url
+                    })
+                    .ToArray();
+                }
+
                 var firstReport = reports.FirstOrDefault();
                 var model = new IndexModel
                 {
@@ -104,21 +136,39 @@ namespace NDashboard.Controllers
         [HttpGet]
         public ActionResult Delete(string url)
         {
-            using (var session = SessionFactory.Create())
-            {
-                var report = session.GetObjectByKey<ReportEntity>(url);
-                string currentPath = HostingEnvironment.ApplicationPhysicalPath;
-                string messageError = string.Empty;
-                currentPath = Path.Combine(currentPath, ApplicationConstant.LOCATION_REPORT_SAVE_NAME);
-                url = url + ApplicationConstant.EXETENSTION_REPORT_SAVE_NAME;
-                currentPath = Path.Combine(currentPath, url);
-                FileManagement fileManagement = new FileManagement();
-                fileManagement.DeleteFileByPath(currentPath,ref messageError);
-                
-                session.Delete(report);
-                session.CommitChanges();
-            }
+
+
+            string currentPath = HostingEnvironment.ApplicationPhysicalPath;
+            string messageError = string.Empty;
+            currentPath = Path.Combine(currentPath, ApplicationConstant.LOCATION_REPORT_SAVE_NAME);
+            url = url + ApplicationConstant.EXETENSTION_REPORT_SAVE_NAME;
+            currentPath = Path.Combine(currentPath, url);
+            FileManagement fileManagement = new FileManagement();
+            fileManagement.DeleteFileByPath(currentPath, ref messageError);
+
+            DeletReport(url);
+
             return Index();
+        }
+
+        public bool DeletReport(string url)
+        {
+            try
+            {
+                using (var session = SessionFactory.Create())
+                {
+                    var report = session.GetObjectByKey<TSOUTERREPORT>(url);
+                    session.Delete(report);
+                    session.CommitChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return true;
         }
 
         [HttpGet]

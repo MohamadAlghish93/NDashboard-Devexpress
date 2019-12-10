@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using HelperNVS.ClassesHelper;
 
 namespace HelperNVS.FileManagement
 {
@@ -33,6 +34,30 @@ namespace HelperNVS.FileManagement
             {
                 using (FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read))
                     file.CopyTo(ms);
+            }
+            catch (Exception e)
+            {
+                messageError = e.Message;
+                return null;
+            }
+
+            return ms;
+        }
+
+        public List<ClassesHelper.ClassesHelper.FliesName> GetFilesWithoutExtensionFromDirectory(string dir, ref string messageError)
+        {
+            List<ClassesHelper.ClassesHelper.FliesName> ms = new List<ClassesHelper.ClassesHelper.FliesName>();
+            try
+            {
+                string[] files = Directory.GetFiles(dir);
+                foreach (string file in files)
+                {
+                    ms.Add(new ClassesHelper.ClassesHelper.FliesName
+                    {
+                        Url = Path.GetFileNameWithoutExtension(file)
+                    }
+                    );
+                }
             }
             catch (Exception e)
             {

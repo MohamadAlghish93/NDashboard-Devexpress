@@ -19,7 +19,7 @@ namespace NDashboard
             // Check if the URL is available in the report storage.
             using (var session = SessionFactory.Create())
             {
-                return session.GetObjectByKey<ReportEntity>(url) != null;
+                return session.GetObjectByKey<TSOUTERREPORT>(url) != null;
             }
         }
         public override bool IsValidUrl(string url)
@@ -34,7 +34,7 @@ namespace NDashboard
             // Get the report data from the storage.
             using (var session = SessionFactory.Create())
             {
-                var report = session.GetObjectByKey<ReportEntity>(url);
+                var report = session.GetObjectByKey<TSOUTERREPORT>(url);
                 MemoryStream vs = this.ReadFromFile(url);
                 return vs.ToArray();
                 //return report.Layout;
@@ -46,7 +46,7 @@ namespace NDashboard
             // Get URLs and display names for all reports available in the storage
             using (var session = SessionFactory.Create())
             {
-                return session.Query<ReportEntity>().ToDictionary<ReportEntity, string, string>(report => report.Url, report => report.Url);
+                return session.Query<TSOUTERREPORT>().ToDictionary<TSOUTERREPORT, string, string>(report => report.Url, report => report.Url);
             }
         }
 
@@ -55,7 +55,7 @@ namespace NDashboard
             // Write a report to the storage under the specified URL.
             using (var session = SessionFactory.Create())
             {
-                var reportEntity = session.GetObjectByKey<ReportEntity>(url);
+                var reportEntity = session.GetObjectByKey<TSOUTERREPORT>(url);
                
 
                 MemoryStream ms = new MemoryStream();
@@ -79,7 +79,7 @@ namespace NDashboard
                     MemoryStream ms = new MemoryStream();
                     report.SaveLayout(ms);
 
-                    var reportEntity = new ReportEntity(session)
+                    var reportEntity = new TSOUTERREPORT(session)
                     {
                         Url = defaultUrl
                     };

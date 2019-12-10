@@ -7,13 +7,13 @@ using DevExpress.Xpo;
 namespace NDashboard.DAL
 {
     [DeferredDeletion(false)]
-    public class ReportEntity : XPCustomObject
+    public class TSOUTERREPORT : XPCustomObject
     {
         string url;
         string name;
         byte[] layout;
 
-        public ReportEntity(Session session)
+        public TSOUTERREPORT(Session session)
             : base(session)
         {
         }

@@ -21,7 +21,7 @@ namespace NDashboard.Controllers
         {
             using (var session = SessionFactory.Create())
             {
-                var reports = session.Query<ReportEntity>()
+                var reports = session.Query<TSOUTERREPORT>()
                     .Select(x => new ReportModel
                     {
                         Url = x.Url
@@ -42,7 +42,7 @@ namespace NDashboard.Controllers
         {
             using (var session = SessionFactory.Create())
             {
-                var report = session.GetObjectByKey<ReportEntity>(url);
+                var report = session.GetObjectByKey<TSOUTERREPORT>(url);
                 session.Delete(report);
 
                 session.CommitChanges();
