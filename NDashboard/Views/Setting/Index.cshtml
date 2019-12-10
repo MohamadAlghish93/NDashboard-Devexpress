@@ -47,7 +47,7 @@
 <script type="text/javascript">
 
     function SaveSetting() {
-        debugger
+        
         let serverName = $('#serverName').val();
         let databaseName = $('#databaseName').val();
         let userName = $('#userName').val();
@@ -69,7 +69,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                debugger
+                
                 if (response != null) {
                     alert("Name : " + response.Name + ", Designation : " + response.Designation + ", Location :" + response.Location);
                 } else {
@@ -77,11 +77,11 @@
                 }
             },
             failure: function (response) {
-                debugger
+                
                 alert(response.responseText);
             },
             error: function (response) {
-                debugger
+                
                 alert(response.responseText);
             }
         });
