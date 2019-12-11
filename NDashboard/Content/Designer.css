@@ -10,7 +10,35 @@
 }
 
 .closeAction {
-    background-image: url(~/Content/Close.png);
+    background-image: url('Close.png');
     background-repeat: no-repeat;
 }
 
+.btn_index_add {
+    background: url('icons/add.png') no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px
+}
+
+.btn_index_view {
+    background: url('icons/open.png') no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px
+}
+
+.btn_index_edit {
+    background: url('icons/edit.png') no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px
+}
+
+.btn_index_delete {
+    cursor: pointer;
+    background: url('icons/delete.png') no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+}

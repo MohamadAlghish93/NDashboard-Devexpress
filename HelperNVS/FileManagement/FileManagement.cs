@@ -12,10 +12,15 @@ namespace HelperNVS.FileManagement
     {
         #region "Memory Stream"
 
-        public bool MemoryStreamWrite(string path, MemoryStream ms, ref string messageError)
+        public bool MemoryStreamWrite(string path, string directoryPath, MemoryStream ms, ref string messageError)
         {
             try
             {
+                bool exists = System.IO.Directory.Exists(directoryPath);
+
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(directoryPath);
+
                 File.WriteAllBytes(path, ms.ToArray());
             }
             catch (Exception e)

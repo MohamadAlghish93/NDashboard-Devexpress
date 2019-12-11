@@ -15,57 +15,63 @@
         new Script { ExtensionSuite = ExtensionSuite.Editors },
         new Script { ExtensionSuite = ExtensionSuite.Report }
     )
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/style4.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/simple-sidebar.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Designer.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/SimpleConfirmationPopup.css")" rel="stylesheet" type="text/css" />
+
+
 
 </head>
 
 <body>
+    <div class="d-flex" id="wrapper">
 
-    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">NReport</div>
+            <div class="list-group list-group-flush">
+                <a href="#" style="text-align:right;" class="list-group-item list-group-item-action bg-light">الرئيسية</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
 
-        <!-- Page Content  -->
-        <div id="content" style="width:100%;">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#"></a>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
 
-                        </li>
-                        <li class="nav-item">
-
-                        </li>
-                        <li class="nav-item">
-
-                        </li>
-                        <li class="nav-item">
-
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                    </form>
                 </div>
             </nav>
 
+            <div class="container-fluid">
+                @RenderBody()
 
-            @RenderBody()
-
+            </div>
         </div>
+        <!-- /#page-content-wrapper -->
+
 
     </div>
-
+    <!-- /#wrapper -->
 
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="@Url.Content(" ~/Scripts/notiflix-1.9.1.min.js")></script>
 
+    <!-- Menu Toggle Script -->
+    <script>
+
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
 
 
 </body>

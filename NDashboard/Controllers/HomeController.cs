@@ -42,46 +42,61 @@ namespace NDashboard.Controllers
                 FileManagement fileManagement = new FileManagement();
                 List<ClassesHelper.FliesName> reportsFile = fileManagement.GetFilesWithoutExtensionFromDirectory(currentPath, ref messageError);
 
-
-                var reports = session.Query<TSOUTERREPORT>()
-                    .Select(x => new ReportModel
-                    {
-                        Url = x.Url
-                    })
-                    .ToArray();
-                if (reportsFile.Count != reports.Count())
+                if (reportsFile != null)
                 {
-
-                    foreach (var item in reports)
-                    {
-                        DeletReport(item.Url);
-                    }
-
-                    foreach (var elem in reportsFile)
-                    {
-                        var reportEntity = new TSOUTERREPORT(session)
-                        {
-                            Url = elem.Url
-                        };
-                        session.CommitChanges();
-                    }
-                    reports = session.Query<TSOUTERREPORT>()
+                    var reports = session.Query<TSOUTERREPORT>()
                     .Select(x => new ReportModel
                     {
                         Url = x.Url
                     })
                     .ToArray();
+                    if (reportsFile.Count != reports.Count())
+                    {
+
+                        foreach (var item in reports)
+                        {
+                            DeletReport(item.Url);
+                        }
+
+                        foreach (var elem in reportsFile)
+                        {
+                            var reportEntity = new TSOUTERREPORT(session)
+                            {
+                                Url = elem.Url
+                            };
+                            session.CommitChanges();
+                        }
+                        reports = session.Query<TSOUTERREPORT>()
+                        .Select(x => new ReportModel
+                        {
+                            Url = x.Url
+                        })
+                        .ToArray();
+                    }
+
+                    var firstReport = reports.FirstOrDefault();
+                    var model = new IndexModel
+                    {
+                        SelectedReportUrl = firstReport != null ? firstReport.Url : String.Empty,
+                        Reports = reports,
+                        EnableEdit = true
+                    };
+                    return View("Index", model);
+
+                }
+                else
+                {
+                    var model = new IndexModel
+                    {
+                        SelectedReportUrl = String.Empty,
+                        Reports = new ReportModel[0],
+                        EnableEdit = true
+                    };
+
+                    return View("Index", model);
                 }
 
-                var firstReport = reports.FirstOrDefault();
-                var model = new IndexModel
-                {
-                    SelectedReportUrl = firstReport != null ? firstReport.Url : String.Empty,
-                    Reports = reports,
-                    EnableEdit = true
-                };
 
-                return View("Index", model);
             }
         }
 
@@ -134,7 +149,7 @@ namespace NDashboard.Controllers
         //}
 
         [HttpGet]
-        public ActionResult Delete(string url)
+        public JsonResult Delete(string url)
         {
 
 
@@ -148,7 +163,8 @@ namespace NDashboard.Controllers
 
             DeletReport(url);
 
-            return Index();
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         public bool DeletReport(string url)

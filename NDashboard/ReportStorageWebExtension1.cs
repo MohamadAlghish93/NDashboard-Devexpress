@@ -93,11 +93,11 @@ namespace NDashboard
         {
             string currentPath = HostingEnvironment.ApplicationPhysicalPath;
             string messageError = string.Empty;
-            currentPath = Path.Combine(currentPath, ApplicationConstant.LOCATION_REPORT_SAVE_NAME);
+            string directoryPath  = Path.Combine(currentPath, ApplicationConstant.LOCATION_REPORT_SAVE_NAME);
             name = name + ApplicationConstant.EXETENSTION_REPORT_SAVE_NAME;
-            currentPath = Path.Combine(currentPath, name);
+            currentPath = Path.Combine(directoryPath, name);
             FileManagement fileManagement = new FileManagement();
-            if (fileManagement.MemoryStreamWrite(currentPath, ms, ref messageError))
+            if (fileManagement.MemoryStreamWrite(currentPath, directoryPath, ms, ref messageError))
             {
 
             }

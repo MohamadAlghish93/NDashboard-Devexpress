@@ -12,93 +12,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
-
 </head>
 
 <body>
 
     <!-- Editable table -->
-    <div class="card" dir="rtl">
 
-        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
-            قائمة التقارير
-        </h3>
-        <div class="card-body">
-            <div id="table" class="table-editable">
-                <span class="table-add float-right mb-3 mr-2">
+    <h3 class=" text-center font-weight-bold text-uppercase py-4">
+        قائمة التقارير
+    </h3>
+    <div id="table" class="table-editable" dir="rtl">
+        <span class="table-add float-right mb-3 mr-2">
 
+            @if (Model.EnableEdit)
+            {
+                @Html.ActionLink(" ", "New", "Home", null, new { @style = "", @class = "btn_index_add" })
+            }
+
+        </span>
+        <table class="table table-bordered  table-striped text-center">
+            <thead>
+                <tr>
+                    <th class="text-center">اسم التقرير</th>
                     @if (Model.EnableEdit)
                     {
-                        <a class="text-success">
-                            @Html.ActionLink("إضافة", "New", "Home", null, new { @class = "btn btn-primary btn-large" })
-                        </a>
+                        <th class="text-center"></th>
                     }
+                </tr>
+            </thead>
+            <tbody>
 
-                </span>
-                <table class="table table-bordered  table-striped text-center">
-                    <thead>
-                        <tr>
-                            <th class="text-center">اسم التقرير</th>
-                            <th class="text-center"></th>
-                            @if (Model.EnableEdit)
-                            {
-                                <th class="text-center"></th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
+                @if (Model.Reports.Length == 0)
+                {
+                    <tr>
+                        <td>
+                            لا يوجد تقارير
+                        </td>
+                    </tr>
+                }
 
-                        @foreach (var item in Model.Reports)
+                @foreach (var item in Model.Reports)
+                {
+                    <tr>
+                        <td class="pt-3-half" contenteditable="true">
+                            @item.Url
+                        </td>
+
+
+                        @if (Model.EnableEdit)
                         {
-                            <tr>
-                                <td class="pt-3-half" contenteditable="true">
-                                    @item.Url
-                                </td>
+                            <td>
+                                @Html.ActionLink(" ", "ViewExist", new { url = item.Url }, new { @style = "", @class = "btn_index_view" })
 
-                                <td class="pt-3-half">
+                                @Html.ActionLink(" ", "Design", new { url = item.Url }, new { @style = "", @class = "btn_index_edit" })
 
-                                    @Html.ActionLink("معاينة", "ViewExist", new { url = item.Url })
-                                    <a>
-                                        <i class="fas fa-eye"></i>
+                                @*@Html.ActionLink(" ", "Delete", new { url = item.Url }, new { @style = "background:url('Content/icons/delete.png') no-repeat; display:inline-block; height: 30px; width: 30px" })*@
+                                <a onclick="delete_confirmition( '@item.Url' )" style="" class="btn_index_delete">
 
-                                    </a>
-                                </td>
+                                </a>
 
-                                @if (Model.EnableEdit)
-                                {
-                                    <td>
-                                        @Html.ActionLink("تعديل", "Design", new { url = item.Url })
-                                        <a>
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-
-                                        @Html.ActionLink("حذف", "Delete", new { url = item.Url })
-                                        <a href="#myModal" class="trigger-btn" data-toggle="modal">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-
-                                    </td>
-                                }
-                            </tr>
+                            </td>
                         }
+                    </tr>
+                }
 
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            </tbody>
+        </table>
+    </div>
     </div>
     <!-- Editable table -->
 
-    <script type="text/javascript">
+    <div class="cd-popup" role="alert">
+        <div class="cd-popup-container">
+            <p>هل تريد حذف التقرير ؟</p>
+            <ul class="cd-buttons">
+                <li><a href="" class="btn-confirm-cd-popup" style="text-decoration:none">نعم</a></li>
+                <li><a href="" class="btn-cd-popup-close" style="text-decoration:none">لا</a></li>
+            </ul>
+            <a href="" class="cd-popup-close img-replace">إغلاق</a>
+        </div> <!-- cd-popup-container -->
+    </div> <!-- cd-popup -->
 
-        function deleteRow() {
+    <script>
 
-
+        var urlDelete = '';
+        function delete_confirmition(url) {
+            event.preventDefault();
+            urlDelete = url;
+            $('.cd-popup').addClass('is-visible');
         }
 
+        jQuery(document).ready(function ($) {
+            //open popup
+            $('.cd-popup-trigger').on('click', function (event) {
+                event.preventDefault();
+                $('.cd-popup').addClass('is-visible');
+            });
+
+            //close popup
+            $('.cd-popup').on('click', function (event) {
+                if ($(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') || $(event.target).is('.btn-cd-popup-close')) {
+                    event.preventDefault();
+                    urlDelete = '';
+                    $(this).removeClass('is-visible');
+                }
+
+                if ($(event.target).is('.btn-confirm-cd-popup')) {
+                    event.preventDefault();
+                    let urlRequest = 'Home/Delete?url=' + urlDelete;
+                    $.ajax({
+                        type: "GET",
+                        url: urlRequest,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+
+                            if (result.success) {
+                                location.reload();
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error.message);
+                        }
+                    });
+                }
+
+            });
+            //close popup when clicking the esc keyboard button
+            $(document).keyup(function (event) {
+                if (event.which == '27') {
+                    urlDelete = '';
+                    $('.cd-popup').removeClass('is-visible');
+                }
+            });
+        });
     </script>
 
 </body>
